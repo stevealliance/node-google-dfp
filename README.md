@@ -97,7 +97,7 @@ You can use `urn:ietf:wg:oauth:2.0:oob` for the redirect URL of non-public apps.
 
 ### here's some code examples using the LineItemCreative services
 
-```nodes
+```javascript
 (async ()=> {
     let CreativeService = await dfpuser.getService('CreativeService');
     var statement = new DFP.Statement(`WHERE id = 138260676843`)
