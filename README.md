@@ -56,6 +56,26 @@ dfpUser.setClient(jwtClient)
 
 ```
 
+### Using pr function to transform all method into async friendly Promise
+
+```javascript
+(async ()=> {
+    let CreativeService = await dfpuser.getService('CreativeService');
+    var statement = new DFP.Statement(`WHERE id = 138260676843`)
+    
+    //"pr" function allowing us to turn any service into a Promise 
+    
+    CreativeService = pr(CreativeService);
+    let returnValue = await CreativeService.getCreativesByStatementAsync(statement)
+    let {results, totalResultSetSize} = returnValue.rval;
+    console.log(returnValue)
+     if(totalResultSetSize !== 0) {
+        results[0].name = "this_one_should_be_deleted_again";
+        await CreativeService.updateCreativesAsync({'creatives': results})
+     }
+})();
+```
+
 =======
 ### oAuth setup
 
@@ -97,23 +117,7 @@ You can use `urn:ietf:wg:oauth:2.0:oob` for the redirect URL of non-public apps.
 
 ### here's some code examples using the LineItemCreative services
 
-```javascript
-(async ()=> {
-    let CreativeService = await dfpuser.getService('CreativeService');
-    var statement = new DFP.Statement(`WHERE id = 138260676843`)
-    
-    //"pr" function allowing us to turn any service into a Promise 
-    
-    CreativeService = pr(CreativeService);
-    let returnValue = await CreativeService.getCreativesByStatementAsync(statement)
-    let {results, totalResultSetSize} = returnValue.rval;
-    console.log(returnValue)
-     if(totalResultSetSize !== 0) {
-        results[0].name = "this_one_should_be_deleted_again";
-        await CreativeService.updateCreativesAsync({'creatives': results})
-     }
-})();
-```
+
 Known Issues
 ------------
 
