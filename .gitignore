@@ -1,3 +1,5 @@
 node_modules
 *sublime-*
 local-test
+test.js
+.idea
